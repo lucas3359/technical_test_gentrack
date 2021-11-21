@@ -156,7 +156,7 @@ namespace TechnicalTest_Gentrack
             return true;
         }
 
-        private string GetRowNumber(string row)
+        public static string GetRowNumber(string row)
         {
             var columns = row.Split(",");
             if (columns.Length < 1) return "";

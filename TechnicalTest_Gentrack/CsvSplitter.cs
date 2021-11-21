@@ -55,7 +55,8 @@ namespace TechnicalTest_Gentrack
         {
             foreach (var block in blocks)
             {
-                var isHeader = block.StartsWith("100,");
+                var rowNumber = CsvValidator.GetRowNumber(block);
+                var isHeader = rowNumber == "100";
                 if (isHeader)
                 {
                     return block;
@@ -69,7 +70,8 @@ namespace TechnicalTest_Gentrack
         {
             foreach (var block in blocks)
             {
-                var isTrailer = block.StartsWith("900");
+                var rowNumber = CsvValidator.GetRowNumber(block);
+                var isTrailer = rowNumber == "900";
                 if (isTrailer)
                 {
                     return block;
@@ -87,7 +89,8 @@ namespace TechnicalTest_Gentrack
 
         private string GetCsvContent(string block)
         {
-            var isTrailer = block.StartsWith("200,");
+            var rowNumber = CsvValidator.GetRowNumber(block);
+            var isTrailer = rowNumber == "200";
             if (isTrailer)
             {
                 return block;
