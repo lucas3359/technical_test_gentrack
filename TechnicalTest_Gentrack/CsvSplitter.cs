@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using TechnicalTest_Gentrack.Models;
 
@@ -8,7 +9,7 @@ namespace TechnicalTest_Gentrack
     {
         public List<CsvFilesData> SplitCsv(CsvIntervalData csvWholeString)
         {
-            var cleanedCsvWholeString = csvWholeString.Value.Trim('\r', '\n', '\t').Trim();
+            var cleanedCsvWholeString = CleanCsvString(csvWholeString.Value);
             var pattern = @"\n(?=200|900)";
 
             var blocks = Regex.Split(cleanedCsvWholeString, pattern);
@@ -31,6 +32,23 @@ namespace TechnicalTest_Gentrack
             }
 
             return csvFile;
+        }
+
+        private string CleanCsvString(string wholeString)
+        {
+            var rows = wholeString.Split('\n');
+
+            var stringBuilder = new StringBuilder();
+            foreach (var row in rows)
+            {
+                var trimmedRow = row.Trim('\n', '\r', '\t');
+                if (trimmedRow.Length > 0)
+                {
+                    stringBuilder.AppendLine(trimmedRow);
+                }
+            }
+
+            return stringBuilder.ToString();
         }
 
         private string GetCsvHeader(string[] blocks)
